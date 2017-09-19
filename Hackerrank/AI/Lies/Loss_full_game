@@ -1,0 +1,984 @@
+60 1 0 3 1
+117
+0 1 NO
+2 3 NO
+4 5 NO
+6 7 YES
+8 9 YES
+10 11 NO
+12 13 YES
+14 15 NO
+16 17 NO
+18 19 NO
+20 21 YES
+22 23 NO
+24 25 YES
+26 27 NO
+28 29 NO
+30 31 NO
+32 33 NO
+34 35 YES
+36 37 YES
+38 39 NO
+40 41 NO
+42 43 NO
+44 45 NO
+46 47 NO
+48 49 NO
+50 51 NO
+52 53 NO
+54 55 YES
+56 57 YES
+58 59 NO
+9 7 NO
+13 7 YES
+7 21 NO
+7 25 YES
+7 35 YES
+7 37 YES
+7 55 NO
+7 57 YES
+7 0 YES
+7 1 NO
+7 2 NO
+7 3 NO
+7 4 YES
+7 5 NO
+7 10 NO
+7 11 YES
+7 14 YES
+7 15 NO
+7 16 NO
+7 17 YES
+7 18 NO
+7 19 YES
+7 22 NO
+7 23 NO
+7 26 NO
+7 27 NO
+7 28 NO
+7 29 NO
+7 30 NO
+7 31 NO
+7 32 NO
+7 33 NO
+7 38 NO
+7 39 NO
+7 40 NO
+7 41 NO
+7 42 NO
+7 43 NO
+7 44 NO
+7 45 NO
+7 46 YES
+7 47 NO
+7 48 NO
+7 49 NO
+7 50 NO
+7 51 NO
+7 52 NO
+7 53 NO
+7 58 YES
+7 59 NO
+21 9 NO
+55 9 YES
+9 1 YES
+9 2 NO
+9 3 YES
+9 5 NO
+9 10 NO
+9 15 NO
+9 16 YES
+9 18 YES
+9 22 NO
+9 23 YES
+9 26 YES
+9 27 NO
+9 28 YES
+9 29 NO
+9 30 NO
+9 31 YES
+9 32 YES
+9 33 NO
+9 38 NO
+9 39 YES
+9 40 NO
+9 41 YES
+9 42 NO
+9 43 YES
+9 44 YES
+9 45 NO
+9 47 YES
+9 48 YES
+9 49 NO
+9 50 NO
+9 51 YES
+9 52 NO
+9 53 YES
+9 59 NO
+21 2 YES
+
+	
+	
+
+21 5
+
+	
+Error
+
+	
+
+
+Submitted Code
+
+Language: C++
+Open in editor
+
+1
+
+#include<stdio.h>
+
+2
+
+#include<stdlib.h>
+
+3
+
+#include<string.h>
+
+4
+
+#include<bits/stdc++.h>
+
+5
+
+using namespace std;
+
+6
+
+#define max(a,b) a>b?a:b
+
+7
+
+#define pi pair<int,int> 
+
+8
+
+#define ppi pair<pair<int,int>,pair<int,int> >
+
+9
+
+int sets[112345];
+
+10
+
+int size[112345];
+
+11
+
+int max_Set_size=1;
+
+12
+
+int N;
+
+13
+
+void initialize_set()
+
+14
+
+{
+
+15
+
+    for(int i=0;i<112345;i++)
+
+16
+
+    {
+
+17
+
+        sets[i]=i;
+
+18
+
+        size[i]=1;
+
+19
+
+    }
+
+20
+
+}
+
+21
+
+int find(int,int);
+
+22
+
+int findroot(int a)
+
+23
+
+{
+
+24
+
+    int i=a;
+
+25
+
+    while(sets[i]!=i)
+
+26
+
+    {
+
+27
+
+    i=sets[i];
+
+28
+
+    }
+
+29
+
+    return i;
+
+30
+
+}
+
+31
+
+int union_set(int a,int b)
+
+32
+
+{
+
+33
+
+////cout<<"merging "<<a<<"  "<<b<<"\n";
+
+34
+
+    if(find(a,b))return -1;
+
+35
+
+    if(size[findroot(a)]+size[findroot(b)]>N/2)return a;
+
+36
+
+    
+
+37
+
+    max_Set_size-max(max_Set_size,size[findroot(a)]+size[findroot(b)]);
+
+38
+
+    if(size[a]>size[b])
+
+39
+
+    {
+
+40
+
+        size[findroot(a)]+=size[findroot(b)];
+
+41
+
+        sets[findroot(b)]=findroot(a);  
+
+42
+
+    }
+
+43
+
+    else{
+
+44
+
+    size[findroot(b)]+=size[findroot(a)];
+
+45
+
+    sets[findroot(a)]=findroot(b);
+
+46
+
+    }
+
+47
+
+    return -1;
+
+48
+
+}
+
+49
+
+int find(int a,int b)
+
+50
+
+{
+
+51
+
+    return findroot(a)==findroot(b);
+
+52
+
+}
+
+53
+
+​
+
+54
+
+void nextQuestion(int n, int plularity, int lies, int color, int exact_lies, int query_size, int query[100][100])
+
+55
+
+{
+
+56
+
+int i,j;
+
+57
+
+​
+
+58
+
+    //Check all atleast once
+
+59
+
+    
+
+60
+
+    for(int i=0;i<N/2;i++)
+
+61
+
+    {
+
+62
+
+    if(query[i*2][2*i+1]==-1)
+
+63
+
+        {
+
+64
+
+        printf("%d %d\n",2*i,2*i+1);
+
+65
+
+        return;
+
+66
+
+        }
+
+67
+
+    }
+
+68
+
+​
+
+69
+
+​
+
+70
+
+    //Check the two largest sets
+
+71
+
+    priority_queue<pair<int,int> > pq;
+
+72
+
+    int added[n];
+
+73
+
+    for(int i=0;i<n;i++)added[i]=0;
+
+74
+
+    for(int i=0;i<n;i++)
+
+75
+
+    {
+
+76
+
+        if(added[findroot(i)]==0)
+
+77
+
+        {
+
+78
+
+        pq.push(make_pair(size[findroot(i)],findroot(i)));
+
+79
+
+        added[findroot(i)]=1;
+
+80
+
+        }
+
+81
+
+        
+
+82
+
+    }
+
+83
+
+​
+
+84
+
+    if(pq.size()==color){
+
+85
+
+    printf("%d",pq.top().second);
+
+86
+
+    return ;
+
+87
+
+    }
+
+88
+
+    vector<pi>vec;
+
+89
+
+    //cout<<"VEC:\n";
+
+90
+
+    while(!pq.empty())
+
+91
+
+    {
+
+92
+
+        vec.push_back(pq.top());pq.pop();
+
+93
+
+    }
+
+94
+
+    for(int i=0;i<vec.size();i++)
+
+95
+
+    {
+
+96
+
+   //cout<<"Set owned by "<<vec[i].second<<"sized"<<vec[i].first<<endl;
+
+97
+
+    }
+
+98
+
+    //cout<<"Ordered:\n";
+
+99
+
+    vector<pair<int,ppi> > ordered;
+
+100
+
+    for(int i=0;i<vec.size();i++)
+
+101
+
+    {
+
+102
+
+    for(int j=i+1;j<vec.size();j++)
+
+103
+
+        {
+
+104
+
+            ordered.push_back(make_pair(-1*(vec[i].first+vec[j].first),make_pair(vec[i],vec[j])));
+
+105
+
+        }
+
+106
+
+    }
+
+107
+
+    sort(ordered.begin(),ordered.end());
+
+108
+
+    for(int i=0;i<ordered.size();i++)
+
+109
+
+    {
+
+110
+
+        //printf("%d %d %d\n",ordered[i].first,ordered[i].second.first.second,ordered[i].second.second.second);
+
+111
+
+    }
+
+112
+
+    for(int i=0;i<ordered.size();i++)
+
+113
+
+    {
+
+114
+
+        if(query[ordered[i].second.first.second][ordered[i].second.second.second]==-1)
+
+115
+
+        {
+
+116
+
+        printf("%d %d\n",ordered[i].second.first.second,ordered[i].second.second.second);
+
+117
+
+        return;
+
+118
+
+        }
+
+119
+
+    }
+
+120
+
+    
+
+121
+
+}
+
+122
+
+​
+
+123
+
+void nextQuestion2(int n, int plularity, int lies, int color, int exact_lies, int query_size, int query[100][100],int next)
+
+124
+
+{
+
+125
+
+int i,j;
+
+126
+
+int non=0;
+
+127
+
+for(int i=1;i<next;i++)
+
+128
+
+{
+
+129
+
+    if(find(0,i))continue;
+
+130
+
+    non=i;
+
+131
+
+    break;
+
+132
+
+}
+
+133
+
+​
+
+134
+
+if(next>N/2)
+
+135
+
+{
+
+136
+
+    if(size[findroot(0)]>=N/2)
+
+137
+
+        {
+
+138
+
+    printf("0");return;
+
+139
+
+    }
+
+140
+
+    
+
+141
+
+    else if(next-size[findroot(0)]>=N/2)
+
+142
+
+    {
+
+143
+
+    for(int i=1;i<next;i++){if(!find(0,i)){printf("%d\n",i);return;}}
+
+144
+
+    printf("0");
+
+145
+
+    return ;
+
+146
+
+    }
+
+147
+
+    
+
+148
+
+    else
+
+149
+
+    {
+
+150
+
+        if(2*size[findroot(0)]>(next))
+
+151
+
+        {
+
+152
+
+            printf("0\n");
+
+153
+
+            return;
+
+154
+
+        }
+
+155
+
+        else
+
+156
+
+        {
+
+157
+
+            printf("%d\n",non);
+
+158
+
+            return;
+
+159
+
+        }
+
+160
+
+    }
+
+161
+
+}
+
+162
+
+​
+
+163
+
+    //Check all atleast once
+
+164
+
+        
+
+165
+
+    
+
+166
+
+    printf("%d %d\n",i,next);
+
+167
+
+    
+
+168
+
+    //Check the two largest sets
+
+169
+
+​
+
+170
+
+    
+
+171
+
+}
+
+172
+
+int main(void)
+
+173
+
+{
+
+174
+
+    int n,plularity, lies, color, exact_lies, query_size,x,y;
+
+175
+
+    scanf("%d", &N);
+
+176
+
+    scanf("%d", &plularity);
+
+177
+
+    scanf("%d", &lies);
+
+178
+
+    scanf("%d", &color);
+
+179
+
+    scanf("%d", &exact_lies);
+
+180
+
+    scanf("%d", &query_size);
+
+181
+
+    initialize_set();
+
+182
+
+    n=N;
+
+183
+
+    int query[ 100][ 100 ];
+
+184
+
+    for(int i=0;i<n; i++) {
+
+185
+
+        for( int j=0;j<n;j++ ) {
+
+186
+
+            query[ i ][ j ] = -1;
+
+187
+
+        }
+
+188
+
+    }
+
+189
+
+    char *answer = (char *)malloc(5);
+
+190
+
+    for(int i=0;i<query_size;i++) {
+
+191
+
+        scanf("%d %d %s", &x,&y, answer);
+
+192
+
+        if(!strcmp(answer,"YES"))
+
+193
+
+        {
+
+194
+
+            query[ x ][ y ] = 1;
+
+195
+
+            query[ y ][ x ] = 1;
+
+196
+
+            union_set(x,y);
+
+197
+
+        }
+
+198
+
+        else
+
+199
+
+        {
+
+200
+
+            query[ x ][ y ] = 0;
+
+201
+
+            query[ y ][ x ] = 0;
+
+202
+
+        }
+
+203
+
+    }
+
+204
+
+    if(color>2)
+
+205
+
+    nextQuestion(n, plularity, lies, color, exact_lies, query_size, query);
+
+206
+
+    else
+
+207
+
+     nextQuestion2(n, plularity, lies, color, exact_lies, query_size, query,query_size+1);
+
+208
+
+    
+
+209
+
+    return 0;
+
+210
+
+}
+
+211
+
+​
+
+Join us on IRC at #hackerrank on freenode for hugs or bugs.
+
+Contest Calendar | Interview Prep | Blog | Scoring | Environment | FAQ | About Us | Support | Careers | Terms Of Service | Privacy Policy | Request a Feature
+
