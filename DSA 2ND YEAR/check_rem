@@ -1,0 +1,46 @@
+#include<stdio.h>
+long long mod(long long base,int exp,long m)
+    {
+	// moves++;
+    //printf("m=%d\n",moves);
+	    if(exp==0)
+	    return 1;
+        if(exp==1)
+            {
+            return base%m;
+            }
+         
+    if(exp%2==0){
+	    long long v=mod(base,exp/2,m);
+    return (v*v)%m;
+    }
+    else {
+	    long long v=mod(base,exp/2,m);
+          return (v*v*base)%m;
+        }
+    }
+int pow(int x,int k)
+{
+	int v=1,i;
+	for(i=1;i<k;i++)v*=x;
+	return v;
+}
+int main()
+{
+long i,k=7,n=14;
+long long sum=0;
+//for(n=3;n<=105;n+=2){
+	sum=0;
+for(i=1;i<=n;i++)
+	{
+		sum+=mod(i,k,n);
+		
+		//printf("%llu\n",mod(i,k,m));
+	}
+	long long g=n*(n/2);
+	long long x=n;
+	printf("sum=%lld guess:",sum);
+	printf("%lld ",g);
+	printf(" n=%lld\n",x);
+//}
+}

@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int n, m, u, v, weight, _distance[112345], source;
+vector<pair<int, int> > graph[112345]; // an array of vectors that store an integer pair
+pair<int, int> tpair, tpair2; // temporary pairs for insertion into heap and vectors
+
+int main() {
+	cin >> n >> m;
+	for(int i = 0; i < m; i += 1) {
+		cin >> u >> v >> weight;
+		tpair.first = v;
+		tpair.second = weight;
+		graph[u].push_back(tpair);
+		tpair.first = u;
+		tpair.second = weight;
+		graph[v].push_back(tpair);
+	}
+	for(int i = 0; i < n; i += 1) {
+		_distance[i] = -1;
+	}
+	cin >> source;
+	priority_queue<pair<int, int> > q;
+	tpair.first = 0; // minimum distance to source
+	tpair.second = source;
+	q.push(tpair);
+	while(!q.empty()) {
+		tpair = q.top();
+		q.pop();
+		int minimum_distance = -tpair.first;
+		int current_node = tpair.second;
+		if (_distance[current_node] == -1) {
+			_distance[current_node] = minimum_distance;
+			for(auto neighbour: graph[current_node]) {
+				int next_node = neighbour.first;
+				int dist = neighbour.second;
+				if (_distance[next_node] == -1) {
+					tpair2.first = -(minimum_distance + dist);
+					tpair2.second = next_node;
+					q.push(tpair2);
+				}
+			}
+		}
+	}
+	for(int i = 0; i < n; i += 1) {
+		cout << _distance[i] << " ";
+	}
+	cout << endl;
+}
